@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingtai.customermager.dao.PermissionInfoMapper">
+    <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.PermissionEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="perms" property="perms" jdbcType="VARCHAR"/>
+        <result column="pic_name" property="picName" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="order_num" property="orderNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, parent_id, name, perms,pic_name, type, order_num, create_time, update_time
+    </sql>
+    <sql id="Query_Column_List">
+        id, parent_id, name, perms,pic_name, type
+    </sql>
+
+    <!--获取权限列表-->
+    <select id="listPermissionInfo" resultType="com.dingtai.customermager.entity.response.ListPermissionResp"
+            parameterType="com.dingtai.customermager.entity.request.GetPermissionListReq">
+        select
+        <include refid="Query_Column_List"/>
+        ,(select p.name from permission p where p.id = pm.parent_id) as parentName
+        from permission pm
+        <where>
+            <if test="name != null">
+                name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="type != null and type!=0">
+                AND type=#{type,jdbcType=TINYINT}
+            </if>
+            <if test="parentId != null">
+                AND parentId =#{parent_id,jdbcType=BIGINT}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY pm.order_num
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="descOrAsc != null and descOrAsc != ''">
+                ${descOrAsc}
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+        <if test="orderBy != null and orderBy != ''">
+            ,pm.order_num ASC
+        </if>
+    </select>
+
+    <!--获取权限标识列表-->
+    <select id="listPerms" resultType="com.dingtai.customermager.entity.response.ListPermissionResp">
+        select
+        <include refid="Query_Column_List"/>
+        from permission pm
+        ORDER BY pm.order_num
+    </select>
+
+    <select id="listAllPerms" resultType="java.lang.Long">
+        select
+        id
+        from permission pm
+    </select>
+
+    <!--通过上级权限id获取权限信息-->
+    <select id="getPermissionInfoByParentId" parameterType="java.lang.Long"
+            resultType="com.dingtai.customermager.entity.response.GetPermissionTreeResp">
+        select id as permissionId, name,type,pic_name from permission where parent_id = #{parentId} order by order_num asc
+    </select>
+
+    <!--获取非按钮权限列表-->
+    <select id="queryNotButtonList" resultType="com.dingtai.customermager.entity.response.ListPermissionResp">
+        select
+        <include refid="Query_Column_List"/>
+        from permission p where type != 2 order by p.order_num asc
+    </select>
+
+    <!--根据权限id查询权限标识-->
+    <select id="getPermsByPermissionId" parameterType="java.lang.Long"
+            resultType="java.lang.String">
+        select perms from permission where id = #{permissionId, jdbcType=BIGINT}
+    </select>
+
+    <!--根据权限标识查询权限信息-->
+    <select id="getPermissionInfoByPerms" parameterType="java.lang.String"
+            resultType="com.dingtai.customermager.entity.response.ListPermissionResp">
+        select id, parent_id parentId from permission where perms = #{perms, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getRoot" parameterType="java.lang.String"
+            resultType="java.lang.Long">
+        select id from permission where id IN (${ids})
+        and parent_id=0
+    </select>
+    <select id="getPermSign" parameterType="java.lang.String" resultType="java.lang.String">
+        select perms from permission where id IN (${ids})
+    </select>
+    <select id="getParents" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select parent_id from permission where id IN (${ids})
+    </select>
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingtai.customermager.dao.CustomerInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.CustomerEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="credit_code" property="creditCode" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="invoice_content" property="invoiceContent" jdbcType="VARCHAR" />
+    <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="register_address" property="registerAddress" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_name, contacts, phone, address, bank_name, credit_code, bank, tel, invoice_content, 
+    invoice_type, account, register_address, status, creator, create_time, modifier, 
+    modify_time
+  </sql>
+  <select id="listCustomer" resultType="com.dingtai.customermager.entity.response.GetCustomerResp"
+          parameterType="com.dingtai.customermager.entity.request.GetCustomerReq">
+    SELECT
+    id,
+    customer_name, contacts, phone, address, bank_name, credit_code, bank, tel, invoice_content,
+    invoice_type, account, register_address
+    from customer
+    <where>
+      <if test="customerName != null and customerName != ''">
+        AND customer_name LIKE CONCAT('%',#{customerName,jdbcType=VARCHAR},'%')
+      </if>
+
+    </where>
+    <choose>
+      <when test="orderBy != null and orderBy != ''">
+        ORDER BY ${orderBy}
+      </when>
+      <otherwise>
+        ORDER BY id
+      </otherwise>
+    </choose>
+    <choose>
+      <when test="descOrAsc != null and descOrAsc != ''">
+        ${descOrAsc}
+      </when>
+      <otherwise>
+        DESC
+      </otherwise>
+    </choose>
+    <if test="orderBy != null and orderBy != ''">
+      ,id DESC
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,33 @@
+profiles: 开发环境(dev)
+server:
+  port: 8080
+  servlet:
+    context-path: /admin
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/dtcustomer?allowMultiQueries=true&&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Hongkong&verifyServerCertificate=false&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size:  10
+    max-active:  200
+    min-idle:  10
+    max-wait:  60000
+    pool-prepared-statements:  true
+    max-pool-prepared-statement-per-connection-size:  20
+    validation-query:  SELECT 1 FROM DUAL
+    test-on-borrow:  false
+    test-on-return:  false
+    test-while-idle:  true
+    time-between-eviction-runs-millis:  60000
+    filters:  stat
+  #限制文件大小
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 200MB
+AppKey:
+  originPassword: 123456
+  passwordAesKey: cmcccmss12345678
+  phoneAesKey: tHvnVW9CUFErUyu8

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingtai.customermager.dao.RoleInfoMapper">
+    <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.RoleEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="role_desc" property="roleDesc" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="creator" property="creator" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modifier" property="modifier" jdbcType="BIGINT"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, role_name, role_desc, remark, status, creator, create_time, modifier, modify_time
+  </sql>
+    <!--获取角色列表-->
+    <select id="listRoleInfo" resultType="com.dingtai.customermager.entity.response.GetRoleListResp"
+            parameterType="com.dingtai.customermager.entity.request.GetRoleListReq">
+        select
+        id, role_name, role_desc, create_time
+        from role
+        <where>
+            id !=1
+            <if test="roleName != null">
+                and role_name LIKE CONCAT('%',#{roleName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY id
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="descOrAsc != null and descOrAsc != ''">
+                ${descOrAsc}
+            </when>
+            <otherwise>
+                DESC
+            </otherwise>
+        </choose>
+        <if test="orderBy != null and orderBy != ''">
+            ,id DESC
+        </if>
+    </select>
+
+    <!--新增角色时验证角色是否已存在-->
+    <select id="checkAddRoleName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from role where role_name=#{roleName,jdbcType=VARCHAR}
+    </select>
+
+    <!--更新角色时验证角色是否已存在-->
+    <select id="checkUpdateRoleName" parameterType="com.dingtai.customermager.entity.request.UpdateRoleReq"
+            resultType="java.lang.Integer">
+        select count(1) from role where role_name=#{roleName,jdbcType=VARCHAR} AND id!=#{roleId,jdbcType=BIGINT}
+    </select>
+
+    <!--新增角色-->
+    <insert id="addRole" parameterType="com.dingtai.customermager.entity.db.RoleEntity" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="roleDesc != null">
+                role_desc,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null">
+                #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

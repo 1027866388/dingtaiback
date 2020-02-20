@@ -1,0 +1,38 @@
+profiles: 线上环境(product)
+server:
+  port: 8080
+  servlet:
+    context-path: /admin
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://10.70.137.74:3306/smart_audit?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Hongkong&verifyServerCertificate=false&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size:  10
+    max-active:  200
+    min-idle:  10
+    max-wait:  60000
+    pool-prepared-statements:  true
+    max-pool-prepared-statement-per-connection-size:  20
+    validation-query:  SELECT 1 FROM DUAL
+    test-on-borrow:  false
+    test-on-return:  false
+    test-while-idle:  true
+    time-between-eviction-runs-millis:  60000
+    filters:  stat
+  #限制文件大小
+  servlet:
+    multipart:
+      max-file-size: 10240MB
+      max-request-size: 10240MB
+AppKey:
+  originPassword: ENC(iPsYBI4LXIZ1gLfmrw0veA==)
+  passwordAesKey: ENC(dZ6231+ZREjyA0VBOn/erxE8sbIj79kA1Q4DRV1mkvI=)
+  tokenAesKey: ENC(3+5RKJTsdcg3mBJ9EPzF22cqbn5AUEBfipe6h8MhR/k=)
+  taskAesKey: ENC(d5+iTYA6g9JRNhbjr0qI/y0y9iX2A/HSDiTN+Dc+p/0=)
+  phoneAesKey: ENC(2OX3+aE/nrAmqGJEcq+lzRCRZ66ERFJDvto9UYCSAkU=)
+  SecStrAesKey: ENC(SMmYlbtkru6Mth0Rfi2DAme63kl9mWFI+CaB6ESanZk=)
+  appkeys: ENC(iR5r0anPwvFnuIaeb76b9A==)
+  appSecrets: ENC(gmegDDnHjBVu4W34O/rT70cBvxxfB/Xu)
