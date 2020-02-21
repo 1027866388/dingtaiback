@@ -1,9 +1,8 @@
 package com.dingtai.customermager.service.impl;
 
 import com.dingtai.customermager.dao.CustomerInfoMapper;
-import com.dingtai.customermager.entity.request.GetCustomerReq;
-import com.dingtai.customermager.entity.response.GetCustomerResp;
-import com.dingtai.customermager.entity.response.GetUserListResp;
+import com.dingtai.customermager.entity.request.GetCustomerListReq;
+import com.dingtai.customermager.entity.response.GetCustomerListResp;
 import com.dingtai.customermager.service.CustomerService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -24,10 +23,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerInfoMapper customerInfoMapper;
     @Override
-    public PageInfo<GetCustomerResp> listCustomer(GetCustomerReq request) {
+    public PageInfo<GetCustomerListResp> listCustomer(GetCustomerListReq request) {
         PageHelper.startPage(request.getPageCurrent(), request.getPageSize());
-        Page<GetCustomerResp> listCustomer = customerInfoMapper.listCustomer(request);
-        PageInfo<GetCustomerResp> listCustomerPageInfo = new PageInfo(listCustomer);
+        Page<GetCustomerListResp> listCustomer = customerInfoMapper.listCustomer(request);
+        PageInfo<GetCustomerListResp> listCustomerPageInfo = new PageInfo(listCustomer);
         return listCustomerPageInfo;
     }
 }

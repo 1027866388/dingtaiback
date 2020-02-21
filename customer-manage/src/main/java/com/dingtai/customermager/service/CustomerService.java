@@ -1,7 +1,7 @@
 package com.dingtai.customermager.service;
 
-import com.dingtai.customermager.entity.request.GetCustomerReq;
-import com.dingtai.customermager.entity.response.GetCustomerResp;
+import com.dingtai.customermager.entity.request.GetCustomerListReq;
+import com.dingtai.customermager.entity.response.GetCustomerListResp;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -12,5 +12,5 @@ import com.github.pagehelper.PageInfo;
  *  
  */
 public interface CustomerService {
-    public PageInfo<GetCustomerResp> listCustomer(GetCustomerReq request);
+    public PageInfo<GetCustomerListResp> listCustomer(GetCustomerListReq request);
 }

@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  *  @date 2020-02-20 16:18
  *  
  */
-public class GetCustomerResp {
+public class GetCustomerListResp {
     /**
      * 主键id
      */

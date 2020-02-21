@@ -9,7 +9,15 @@ import io.swagger.annotations.ApiModelProperty;
  *  @date 2020-02-20 15:41
  *  
  */
-public class GetCustomerReq extends BasePageReq {
+public class GetCustomerListReq extends BasePageReq {
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     /**
      * customerName
      */

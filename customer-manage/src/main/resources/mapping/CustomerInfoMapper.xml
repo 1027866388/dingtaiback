@@ -26,8 +26,8 @@
     invoice_type, account, register_address, status, creator, create_time, modifier, 
     modify_time
   </sql>
-  <select id="listCustomer" resultType="com.dingtai.customermager.entity.response.GetCustomerResp"
-          parameterType="com.dingtai.customermager.entity.request.GetCustomerReq">
+  <select id="listCustomer" resultType="com.dingtai.customermager.entity.response.GetCustomerListResp"
+          parameterType="com.dingtai.customermager.entity.request.GetCustomerListReq">
     SELECT
     id,
     customer_name, contacts, phone, address, bank_name, credit_code, bank, tel, invoice_content,
@@ -37,7 +37,6 @@
       <if test="customerName != null and customerName != ''">
         AND customer_name LIKE CONCAT('%',#{customerName,jdbcType=VARCHAR},'%')
       </if>
-
     </where>
     <choose>
       <when test="orderBy != null and orderBy != ''">

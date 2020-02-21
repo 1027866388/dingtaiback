@@ -1,8 +1,11 @@
 package com.dingtai.customermager.controller;
 
 import com.dingtai.customermager.entity.Result;
+import com.dingtai.customermager.entity.request.GetContractListReq;
 import com.dingtai.customermager.entity.request.GetCustomerListReq;
+import com.dingtai.customermager.entity.response.GetContractListResp;
 import com.dingtai.customermager.entity.response.GetCustomerListResp;
+import com.dingtai.customermager.service.ContractService;
 import com.dingtai.customermager.service.CustomerService;
 import com.dingtai.customermager.utils.DataValidator;
 import com.github.pagehelper.PageInfo;
@@ -17,29 +20,29 @@ import org.springframework.web.bind.annotation.RestController;
  *  TODO
  *  
  *  @author wangyanhui
- *  @date 2020-02-20 15:40
+ *  @date 2020-02-21 14:33
  *  
  */
 @RestController
-@RequestMapping(value = "/customer")
-@Api(description = "客户接口")
-public class CustomerController {
-
+@RequestMapping(value = "/contract")
+@Api(description = "合同接口")
+public class ContractController {
     @Autowired
-    private CustomerService customerService;
+    private ContractService contractService;
     /**
      * 获取用户列表
      *
      * @param request 请求实体
      * @return Result实体
      */
-    @GetMapping("/listCustomer")
-    @ApiOperation(value = "获取客户列表", httpMethod = "GET")
-    public Result<PageInfo<GetCustomerListResp>> listCustomer(GetCustomerListReq request) {
-        DataValidator.isNull(request, "获取客户列表接口，请求参数不能为空！");
+    @GetMapping("/listContract")
+    @ApiOperation(value = "获取合同列表", httpMethod = "GET")
+    public Result<PageInfo<GetCustomerListResp>> listContract(GetContractListReq request) {
+        DataValidator.isNull(request, "获取合同列表接口，请求参数不能为空！");
 
-        PageInfo<GetCustomerListResp>data = customerService.listCustomer(request);
+        PageInfo<GetContractListResp>data = contractService.listContract(request);
         Result result=new Result(data);
         return result;
     }
+
 }
