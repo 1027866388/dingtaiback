@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingtai.customermager.dao.ContractPeriodEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.ContractPeriodEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="contract_id" property="contractId" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="period_money" property="periodMoney" jdbcType="DECIMAL" />
+    <result column="period_name" property="periodName" jdbcType="VARCHAR" />
+    <result column="period_content" property="periodContent" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, contract_id, start_time, end_time, period_money, period_name, period_content, 
+    status, creator, create_time, modifier, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_period
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from contract_period
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dingtai.customermager.entity.db.ContractPeriodEntity" >
+    insert into contract_period (id, contract_id, start_time, 
+      end_time, period_money, period_name, 
+      period_content, status, creator, 
+      create_time, modifier, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{contractId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{periodMoney,jdbcType=DECIMAL}, #{periodName,jdbcType=VARCHAR}, 
+      #{periodContent,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{creator,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dingtai.customermager.entity.db.ContractPeriodEntity" >
+    insert into contract_period
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contractId != null" >
+        contract_id,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="periodMoney != null" >
+        period_money,
+      </if>
+      <if test="periodName != null" >
+        period_name,
+      </if>
+      <if test="periodContent != null" >
+        period_content,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="contractId != null" >
+        #{contractId,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="periodMoney != null" >
+        #{periodMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="periodName != null" >
+        #{periodName,jdbcType=VARCHAR},
+      </if>
+      <if test="periodContent != null" >
+        #{periodContent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dingtai.customermager.entity.db.ContractPeriodEntity" >
+    update contract_period
+    <set >
+      <if test="contractId != null" >
+        contract_id = #{contractId,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="periodMoney != null" >
+        period_money = #{periodMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="periodName != null" >
+        period_name = #{periodName,jdbcType=VARCHAR},
+      </if>
+      <if test="periodContent != null" >
+        period_content = #{periodContent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dingtai.customermager.entity.db.ContractPeriodEntity" >
+    update contract_period
+    set contract_id = #{contractId,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      period_money = #{periodMoney,jdbcType=DECIMAL},
+      period_name = #{periodName,jdbcType=VARCHAR},
+      period_content = #{periodContent,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      creator = #{creator,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

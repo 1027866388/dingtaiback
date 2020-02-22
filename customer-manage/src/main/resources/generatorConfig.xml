@@ -93,7 +93,7 @@
                     &lt;!&ndash;注释后默认采用驼峰格式<property name="useActualColumnNames" value="true"/>&ndash;&gt;
                     &lt;!&ndash;<columnRenamingRule searchString="" replaceString=""/>&ndash;&gt;
                 </table>-->
-        <table tableName="project" domainObjectName="ProjectEntity"
+        <table tableName="contract_receivables" domainObjectName="ContractReceivablesFollowEntity"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
