@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingtai.customermager.dao.ContractInvoiceEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.ContractInvoiceEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="contract_id" property="contractId" jdbcType="INTEGER" />
+    <result column="invoice_time" property="invoiceTime" jdbcType="TIMESTAMP" />
+    <result column="invoice_money" property="invoiceMoney" jdbcType="DECIMAL" />
+    <result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+    <result column="invoice_person" property="invoicePerson" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, contract_id, invoice_time, invoice_money, invoice_no, invoice_person, remark, 
+    status, creator, create_time, modifier, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_invoice
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from contract_invoice
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dingtai.customermager.entity.db.ContractInvoiceEntity" >
+    insert into contract_invoice (id, contract_id, invoice_time, 
+      invoice_money, invoice_no, invoice_person, 
+      remark, status, creator, 
+      create_time, modifier, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{contractId,jdbcType=INTEGER}, #{invoiceTime,jdbcType=TIMESTAMP}, 
+      #{invoiceMoney,jdbcType=DECIMAL}, #{invoiceNo,jdbcType=VARCHAR}, #{invoicePerson,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{creator,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dingtai.customermager.entity.db.ContractInvoiceEntity" >
+    insert into contract_invoice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contractId != null" >
+        contract_id,
+      </if>
+      <if test="invoiceTime != null" >
+        invoice_time,
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money,
+      </if>
+      <if test="invoiceNo != null" >
+        invoice_no,
+      </if>
+      <if test="invoicePerson != null" >
+        invoice_person,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="contractId != null" >
+        #{contractId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceTime != null" >
+        #{invoiceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceMoney != null" >
+        #{invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceNo != null" >
+        #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicePerson != null" >
+        #{invoicePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dingtai.customermager.entity.db.ContractInvoiceEntity" >
+    update contract_invoice
+    <set >
+      <if test="contractId != null" >
+        contract_id = #{contractId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceTime != null" >
+        invoice_time = #{invoiceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money = #{invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceNo != null" >
+        invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicePerson != null" >
+        invoice_person = #{invoicePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dingtai.customermager.entity.db.ContractInvoiceEntity" >
+    update contract_invoice
+    set contract_id = #{contractId,jdbcType=INTEGER},
+      invoice_time = #{invoiceTime,jdbcType=TIMESTAMP},
+      invoice_money = #{invoiceMoney,jdbcType=DECIMAL},
+      invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      invoice_person = #{invoicePerson,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      creator = #{creator,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
