@@ -80,7 +80,6 @@ public class ProjectQuotationServiceImpl implements ProjectQuotationService {
     public Result queryQuotationByProject(String name) {
 
         List<GetProjectQuotationListResp> projectQuotationInfo = projectQuotationInfoMapper.queryQuotationByProject(name);
-        log.info(projectQuotationInfo.toString());
         if(projectQuotationInfo == null) {
             return new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询报价明细失败!");
         }

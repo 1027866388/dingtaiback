@@ -1,6 +1,5 @@
 package com.dingtai.customermager.entity.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * @author peng.lu
  * @date 2020/2/22
  */
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class GetProjectQuotationListResp implements Serializable {
 
     /**
@@ -40,6 +39,47 @@ public class GetProjectQuotationListResp implements Serializable {
      */
     @ApiModelProperty(value = "备注", name = "remark", allowEmptyValue = true)
     private String remark;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Double getQuotation() {
+        return quotation;
+    }
+
+    public void setQuotation(Double quotation) {
+        this.quotation = quotation;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     @Override
     public String toString() {
