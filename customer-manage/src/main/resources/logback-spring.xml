@@ -24,7 +24,7 @@
         <!-- 按照每天生成日志文件（所有） -->
         <appender name="DEV-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <FileNamePattern>${DEV_FILE_PATH}/all/smart-audit-admin.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <FileNamePattern>${DEV_FILE_PATH}/all/digntai-admin.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
                 <MaxHistory>30</MaxHistory>
                 <TimeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -39,7 +39,7 @@
         <!-- DEV（Info日志） -->
         <appender name="DEV-INFO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <FileNamePattern>${DEV_FILE_PATH}/info/smart-audit-admin_info.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <FileNamePattern>${DEV_FILE_PATH}/info/digntai-admin_info.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
                 <MaxHistory>30</MaxHistory>
                 <TimeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -60,7 +60,7 @@
         <!-- DEV（Warn日志）-->
         <appender name="DEV-WARN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <FileNamePattern>${DEV_FILE_PATH}/warn/smart-audit-admin_warn.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <FileNamePattern>${DEV_FILE_PATH}/warn/digntai-admin_warn.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
                 <MaxHistory>30</MaxHistory>
                 <TimeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -81,7 +81,7 @@
         <!-- DEV（Error日志）-->
         <appender name="DEV-ERROR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <FileNamePattern>${DEV_FILE_PATH}/error/smart-audit-admin_error.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <FileNamePattern>${DEV_FILE_PATH}/error/digntai-admin_error.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
                 <MaxHistory>30</MaxHistory>
                 <TimeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -119,7 +119,7 @@
         <!-- 按照日志大小，当单个文件超过设定阈值，则叠加生成新的文件-->
         <appender name="PRODUCT-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <FileNamePattern>${PRO_FILE_PATH}/all/smart-audit-admin.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <FileNamePattern>${PRO_FILE_PATH}/all/digntai-admin.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
                 <MaxHistory>180</MaxHistory>
                 <TimeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -134,7 +134,7 @@
         <!-- Product（Info日志） -->
         <appender name="PRODUCT-INFO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <FileNamePattern>${PRO_FILE_PATH}/info/smart-audit-admin_info.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <FileNamePattern>${PRO_FILE_PATH}/info/digntai-admin_info.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
                 <MaxHistory>180</MaxHistory>
                 <TimeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -155,7 +155,7 @@
         <!-- Product（Warn日志） -->
         <appender name="PRODUCT-WARN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <FileNamePattern>${PRO_FILE_PATH}/warn/smart-audit-admin_warn.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <FileNamePattern>${PRO_FILE_PATH}/warn/digntai-admin_warn.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
                 <MaxHistory>180</MaxHistory>
                 <TimeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -176,7 +176,7 @@
         <!-- Product（Error日志） -->
         <appender name="PRODUCT-ERROR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <FileNamePattern>${PRO_FILE_PATH}/error/smart-audit-admin_error.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <FileNamePattern>${PRO_FILE_PATH}/error/digntai-admin_error.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
                 <MaxHistory>180</MaxHistory>
                 <TimeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
