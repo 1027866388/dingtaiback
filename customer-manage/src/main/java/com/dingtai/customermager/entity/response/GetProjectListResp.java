@@ -1,6 +1,13 @@
-package com.dingtai.customermager.entity.db;
+package com.dingtai.customermager.entity.response;
 
-public class ProjectEntity {
+/**
+ * 获取项目列表请求实体
+ *
+ * @author peng.lu
+ * @date 2020/2/22
+ */
+public class GetProjectListResp {
+
     /**
      * 项目id
      */
