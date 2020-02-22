@@ -11,5 +11,5 @@ public class OriginConstant {
     /**
      * 域常量
      */
-    public static final String[] ALLOW_ORIGIN = {"http://localhost:8080"};
+    public static final String[] ALLOW_ORIGIN = {"http://localhost"};
 }
