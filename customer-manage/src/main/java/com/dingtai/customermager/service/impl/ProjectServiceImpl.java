@@ -43,7 +43,8 @@ public class ProjectServiceImpl implements ProjectService {
         if (projectInfo != null) {
             result = new Result(projectInfo);
         } else {
-            result = new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询数据为空！");
+//            result = new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询数据为空！");
+            result = null;
         }
         return result;
     }

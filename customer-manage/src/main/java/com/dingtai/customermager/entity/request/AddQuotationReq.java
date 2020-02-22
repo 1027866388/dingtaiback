@@ -30,8 +30,8 @@ public class AddQuotationReq {
     /**
      * 对应项目
      */
-    @ApiModelProperty(value = "对应项目", name = "project", required = true)
-    private Long project;
+    @ApiModelProperty(value = "对应项目名称", name = "name", required = true)
+    private String projectName;
 
     /**
      * 备注
@@ -56,12 +56,12 @@ public class AddQuotationReq {
         this.quotation = quotation;
     }
 
-    public Long getProject() {
-        return project;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setProject(Long project) {
-        this.project = project;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public String getRemark() {

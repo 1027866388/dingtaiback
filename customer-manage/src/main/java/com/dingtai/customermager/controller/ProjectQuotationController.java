@@ -39,7 +39,7 @@ public class ProjectQuotationController {
      * @return Result实体
      */
     @PostMapping("/addQuotation")
-    @ApiOperation(value = "新增报价", httpMethod = "POST")
+    @ApiOperation(value = "新增项目报价明细", httpMethod = "POST")
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = DateTimeConstant.MINUTE_S, rollbackFor = Exception.class)
     public Result addQuotation(@RequestBody @Valid AddQuotationReq request) {
 
