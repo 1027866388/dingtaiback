@@ -18,4 +18,13 @@ public interface ProjectQuotationService {
      * @return Result实体
      */
     public Result addQuotation(AddQuotationReq req);
+
+
+    /**
+     * 获取项目报价明细列表信息
+     *
+     * @param name 项目名称
+     * @return 项目报价明细实体
+     */
+    Result queryQuotationByProject(String name);
 }

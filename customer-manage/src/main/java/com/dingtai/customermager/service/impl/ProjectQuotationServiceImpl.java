@@ -1,9 +1,12 @@
 package com.dingtai.customermager.service.impl;
 
 import com.dingtai.customermager.dao.ProjectQuotationEntityMapper;
+import com.dingtai.customermager.dao.ProjectQuotationInfoMapper;
 import com.dingtai.customermager.entity.Result;
 import com.dingtai.customermager.entity.db.ProjectQuotationEntity;
 import com.dingtai.customermager.entity.request.AddQuotationReq;
+import com.dingtai.customermager.entity.request.GetProjectQuotationListReq;
+import com.dingtai.customermager.entity.response.GetProjectQuotationListResp;
 import com.dingtai.customermager.enums.ResultCodeEnum;
 import com.dingtai.customermager.exceptions.TransactionException;
 import com.dingtai.customermager.service.ProjectQuotationService;
@@ -11,6 +14,8 @@ import com.dingtai.customermager.utils.LogUtil;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 报价接口实现
@@ -32,6 +37,12 @@ public class ProjectQuotationServiceImpl implements ProjectQuotationService {
      */
     @Autowired
     private ProjectQuotationEntityMapper projectQuotationEntityMapper;
+
+    /**
+     * 报价单信息Mapper
+     */
+    @Autowired
+    private ProjectQuotationInfoMapper projectQuotationInfoMapper;
 
 
     /**
@@ -57,5 +68,22 @@ public class ProjectQuotationServiceImpl implements ProjectQuotationService {
         }
         result = new Result();
         return result;
+    }
+
+    /**
+     * 获取项目报价明细列表信息
+     *
+     * @param name 项目名称
+     * @return 项目报价明细实体
+     */
+    @Override
+    public Result queryQuotationByProject(String name) {
+
+        List<GetProjectQuotationListResp> projectQuotationInfo = projectQuotationInfoMapper.queryQuotationByProject(name);
+        log.info(projectQuotationInfo.toString());
+        if(projectQuotationInfo == null) {
+            return new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询报价明细失败!");
+        }
+        return new Result(projectQuotationInfo);
     }
 }
