@@ -84,6 +84,7 @@ public class ProjectQuotationServiceImpl implements ProjectQuotationService {
         if(projectQuotationInfo == null) {
             return new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询报价明细失败!");
         }
+
         return new Result(projectQuotationInfo);
     }
 }
