@@ -1,5 +1,6 @@
 package com.dingtai.customermager.service.impl;
 
+import com.dingtai.customermager.dao.CustomerEntityMapper;
 import com.dingtai.customermager.dao.CustomerInfoMapper;
 import com.dingtai.customermager.entity.request.GetCustomerListReq;
 import com.dingtai.customermager.entity.response.GetCustomerFollowResp;
@@ -25,6 +26,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerInfoMapper customerInfoMapper;
+
+    @Autowired
+    private CustomerEntityMapper customerEntityMapper;
     @Override
     public PageInfo<GetCustomerListResp> listCustomer(GetCustomerListReq request) {
         PageHelper.startPage(request.getPageCurrent(), request.getPageSize());
@@ -36,5 +40,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<GetCustomerFollowResp> getCustomerFollow(long customerId) {
         return customerInfoMapper.getCustomerFollow(customerId);
+    }
+
+    @Override
+    public void deleteCustomer(long customerId) {
+        customerEntityMapper.deleteByPrimaryKey(customerId);
+        customerInfoMapper.deleteFollowByCustomerId(customerId);
+
     }
 }

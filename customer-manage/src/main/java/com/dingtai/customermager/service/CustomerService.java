@@ -16,6 +16,23 @@ import java.util.List;
  *  
  */
 public interface CustomerService {
+    /**
+     * 客户列表
+     * @param request
+     * @return
+     */
     public PageInfo<GetCustomerListResp> listCustomer(GetCustomerListReq request);
+
+    /**
+     * 客户跟进记录
+     * @param customerId
+     * @return
+     */
     public List<GetCustomerFollowResp> getCustomerFollow(long customerId);
+
+    /**
+     * 删除客户
+     * @param customerId
+     */
+    public void deleteCustomer(long customerId);
 }

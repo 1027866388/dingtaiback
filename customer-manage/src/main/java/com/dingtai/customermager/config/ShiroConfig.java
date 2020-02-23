@@ -94,14 +94,6 @@ public class ShiroConfig {
         filterMap.put("/attachment/uploadBigFile", "anon");
         filterMap.put("/user/resetPassword", "anon");
         filterMap.put("/user/sendResetPwdEmail", "anon");
-        // 对外接口
-        filterMap.put("/engAuditApi/*", "anon");
-        filterMap.put("/engFinalAudit/*", "anon");
-        filterMap.put("/processReptile/displayModel", "anon");
-        filterMap.put("/engRiskLevel/*", "anon");
-        filterMap.put("/ecoAuditData/updateAuditFile", "anon");
-        filterMap.put("/engFinalSumTotal/*", "anon");
-
         // 其他接口
         filterMap.put("/**", "authc");
         Map<String, Filter> filterChain = shiroFilter.getFilters();

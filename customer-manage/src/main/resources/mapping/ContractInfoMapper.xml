@@ -80,4 +80,16 @@
     start_time, end_time, period_money, period_name,period_content
     from contract_period where contract_id=#{customerId}
   </select>
+  <delete id="deleteInvoiceByContractId" parameterType="java.lang.Long" >
+    delete from contract_invoice
+    where contract_id= #{contractId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteReceivablesByContractId" parameterType="java.lang.Long" >
+    delete from contract_receivables
+    where contract_id= #{contractId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deletePeriodByContractId" parameterType="java.lang.Long" >
+    delete from contract_period
+    where contract_id= #{contractId,jdbcType=BIGINT}
+  </delete>
 </mapper>

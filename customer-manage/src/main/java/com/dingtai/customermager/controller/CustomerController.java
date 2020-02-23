@@ -1,5 +1,6 @@
 package com.dingtai.customermager.controller;
 
+import com.dingtai.customermager.constants.DateTimeConstant;
 import com.dingtai.customermager.entity.Result;
 import com.dingtai.customermager.entity.request.GetCustomerListReq;
 import com.dingtai.customermager.entity.response.GetCustomerFollowResp;
@@ -11,10 +12,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -58,6 +59,20 @@ public class CustomerController {
     public Result<List<GetCustomerFollowResp>> getCustomerFollow(@ApiParam(name = "customerId", value = "客户id", required = true) @RequestParam Long customerId) {
         List<GetCustomerFollowResp>data = customerService.getCustomerFollow(customerId);
         Result result=new Result(data);
+        return result;
+    }
+
+    /**
+     * 删除客户
+     * @param customerId
+     * @return
+     */
+    @PostMapping("/deleteCustomer")
+    @ApiOperation(value = "删除客户", httpMethod = "POST")
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = DateTimeConstant.MINUTE_S, rollbackFor = Exception.class)
+    public Result<List<GetCustomerFollowResp>> deleteCustomer(@ApiParam(name = "customerId", value = "客户id", required = true) @RequestParam Long customerId) {
+        customerService.deleteCustomer(customerId);
+        Result result=new Result();
         return result;
     }
 }

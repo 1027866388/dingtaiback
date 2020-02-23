@@ -1,23 +1,29 @@
 package com.dingtai.customermager.controller;
 
+import com.dingtai.customermager.constants.DateTimeConstant;
+import com.dingtai.customermager.constants.PermissionConstant;
 import com.dingtai.customermager.entity.Result;
 import com.dingtai.customermager.entity.request.GetContractListReq;
 import com.dingtai.customermager.entity.request.GetCustomerListReq;
 import com.dingtai.customermager.entity.response.*;
+import com.dingtai.customermager.enums.ResultCodeEnum;
 import com.dingtai.customermager.service.ContractService;
 import com.dingtai.customermager.service.CustomerService;
 import com.dingtai.customermager.utils.DataValidator;
+import com.dingtai.customermager.utils.ShiroUtils;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  *  TODO
@@ -84,6 +90,20 @@ public class ContractController {
         List<GetContractInvoiceResp>data = contractService.getContractInvoice(customerId);
         Result result=new Result(data);
         return result;
+    }
+    /**
+     * 删除合同
+     *
+     * @param contractId 用户id
+     * @return Result实体
+     */
+    @PostMapping("/deleteContract")
+    @ApiOperation(value = "删除合同", httpMethod = "POST")
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = DateTimeConstant.MINUTE_S, rollbackFor = Exception.class)
+    public Result deleteUser(@ApiParam(name = "contractId", value = "用户id", required = true) @RequestParam Long contractId) { ;
+
+        contractService.deleteContract(contractId);
+        return new Result();
     }
 
 }
