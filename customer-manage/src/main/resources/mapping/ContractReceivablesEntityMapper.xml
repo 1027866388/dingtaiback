@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dingtai.customermager.dao.ContractReceivablesFollowEntityMapper" >
-  <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.ContractReceivablesFollowEntity" >
+<mapper namespace="com.dingtai.customermager.dao.ContractReceivablesEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.ContractReceivablesEntity" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="contract_id" property="contractId" jdbcType="INTEGER" />
     <result column="receive_time" property="receiveTime" jdbcType="TIMESTAMP" />
@@ -29,7 +29,7 @@
     delete from contract_receivables
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.dingtai.customermager.entity.db.ContractReceivablesFollowEntity" >
+  <insert id="insert" parameterType="com.dingtai.customermager.entity.db.ContractReceivablesEntity" >
     insert into contract_receivables (id, contract_id, receive_time, 
       receive_money, receive_method, receive_person, 
       remark, status, creator, 
@@ -41,7 +41,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.dingtai.customermager.entity.db.ContractReceivablesFollowEntity" >
+  <insert id="insertSelective" parameterType="com.dingtai.customermager.entity.db.ContractReceivablesEntity" >
     insert into contract_receivables
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -120,7 +120,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dingtai.customermager.entity.db.ContractReceivablesFollowEntity" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.dingtai.customermager.entity.db.ContractReceivablesEntity" >
     update contract_receivables
     <set >
       <if test="contractId != null" >
@@ -159,7 +159,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dingtai.customermager.entity.db.ContractReceivablesFollowEntity" >
+  <update id="updateByPrimaryKey" parameterType="com.dingtai.customermager.entity.db.ContractReceivablesEntity" >
     update contract_receivables
     set contract_id = #{contractId,jdbcType=INTEGER},
       receive_time = #{receiveTime,jdbcType=TIMESTAMP},

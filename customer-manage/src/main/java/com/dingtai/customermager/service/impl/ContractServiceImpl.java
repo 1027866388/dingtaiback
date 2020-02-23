@@ -4,14 +4,15 @@ import com.dingtai.customermager.dao.ContractInfoMapper;
 import com.dingtai.customermager.dao.CustomerInfoMapper;
 import com.dingtai.customermager.entity.request.GetContractListReq;
 import com.dingtai.customermager.entity.request.GetCustomerListReq;
-import com.dingtai.customermager.entity.response.GetContractListResp;
-import com.dingtai.customermager.entity.response.GetCustomerListResp;
+import com.dingtai.customermager.entity.response.*;
 import com.dingtai.customermager.service.ContractService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *  TODO
@@ -30,5 +31,20 @@ public class ContractServiceImpl implements ContractService {
         Page<GetContractListResp> listContract = contractInfoMapper.listContract(request);
         PageInfo<GetContractListResp> listContractPageInfo = new PageInfo(listContract);
         return listContractPageInfo;
+    }
+
+    @Override
+    public List<GetContractInvoiceResp> getContractInvoice(long contractId) {
+        return contractInfoMapper.getContractInvoice(contractId);
+    }
+
+    @Override
+    public List<GetContractPeriodResp> getContractPeriod(long contractId) {
+        return contractInfoMapper.getContractPeriod(contractId);
+    }
+
+    @Override
+    public List<GetContractReceivablesResp> getContractReceivables(long contractId) {
+        return contractInfoMapper.getContractReceivables(contractId);
     }
 }

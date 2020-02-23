@@ -2,16 +2,21 @@ package com.dingtai.customermager.controller;
 
 import com.dingtai.customermager.entity.Result;
 import com.dingtai.customermager.entity.request.GetCustomerListReq;
+import com.dingtai.customermager.entity.response.GetCustomerFollowResp;
 import com.dingtai.customermager.entity.response.GetCustomerListResp;
 import com.dingtai.customermager.service.CustomerService;
 import com.dingtai.customermager.utils.DataValidator;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  *  TODO
@@ -39,6 +44,19 @@ public class CustomerController {
         DataValidator.isNull(request, "获取客户列表接口，请求参数不能为空！");
 
         PageInfo<GetCustomerListResp>data = customerService.listCustomer(request);
+        Result result=new Result(data);
+        return result;
+    }
+
+    /**
+     * 获取客户的跟进信息
+     * @param customerId
+     * @return
+     */
+    @GetMapping("/getCustomerFollow")
+    @ApiOperation(value = "获取客户的跟进信息", httpMethod = "GET")
+    public Result<List<GetCustomerFollowResp>> getCustomerFollow(@ApiParam(name = "customerId", value = "客户id", required = true) @RequestParam Long customerId) {
+        List<GetCustomerFollowResp>data = customerService.getCustomerFollow(customerId);
         Result result=new Result(data);
         return result;
     }

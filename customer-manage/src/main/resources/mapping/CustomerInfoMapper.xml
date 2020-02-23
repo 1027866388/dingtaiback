@@ -58,4 +58,12 @@
       ,id DESC
     </if>
   </select>
+
+  <select id="getCustomerFollow" resultType="com.dingtai.customermager.entity.response.GetCustomerFollowResp"
+          parameterType="java.lang.Long">
+    SELECT
+    id,
+    follow_case, remark, create_time, creator
+    from customer_follow where customer_id=#{customerId}
+  </select>
 </mapper>

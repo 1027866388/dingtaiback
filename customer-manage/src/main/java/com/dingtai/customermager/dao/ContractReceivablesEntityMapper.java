@@ -1,8 +1,8 @@
 package com.dingtai.customermager.dao;
 
-import com.dingtai.customermager.entity.db.ContractReceivablesFollowEntity;
+import com.dingtai.customermager.entity.db.ContractReceivablesEntity;
 
-public interface ContractReceivablesFollowEntityMapper {
+public interface ContractReceivablesEntityMapper {
     /**
      *  根据主键删除一条记录
      *
@@ -17,7 +17,7 @@ public interface ContractReceivablesFollowEntityMapper {
      * @param record 实体对象
      * @return 
      */
-    int insert(ContractReceivablesFollowEntity record);
+    int insert(ContractReceivablesEntity record);
 
     /**
      *  写入一条符合条件的记录
@@ -25,7 +25,7 @@ public interface ContractReceivablesFollowEntityMapper {
      * @param record 实体对象
      * @return 
      */
-    int insertSelective(ContractReceivablesFollowEntity record);
+    int insertSelective(ContractReceivablesEntity record);
 
     /**
      *  根据主键查询一条记录
@@ -33,7 +33,7 @@ public interface ContractReceivablesFollowEntityMapper {
      * @param id 主键
      * @return 
      */
-    ContractReceivablesFollowEntity selectByPrimaryKey(Long id);
+    ContractReceivablesEntity selectByPrimaryKey(Long id);
 
     /**
      *  根据主键更新一条符合条件的记录
@@ -41,7 +41,7 @@ public interface ContractReceivablesFollowEntityMapper {
      * @param record 实体对象
      * @return 
      */
-    int updateByPrimaryKeySelective(ContractReceivablesFollowEntity record);
+    int updateByPrimaryKeySelective(ContractReceivablesEntity record);
 
     /**
      *  根据主键更新一条记录
@@ -49,5 +49,5 @@ public interface ContractReceivablesFollowEntityMapper {
      * @param record 实体对象
      * @return 
      */
-    int updateByPrimaryKey(ContractReceivablesFollowEntity record);
+    int updateByPrimaryKey(ContractReceivablesEntity record);
 }

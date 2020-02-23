@@ -1,8 +1,15 @@
-package com.dingtai.customermager.entity.db;
+package com.dingtai.customermager.entity.response;
 
 import java.util.Date;
 
-public class ContractReceivablesFollowEntity {
+/**
+ *  TODO
+ *  
+ *  @author wangyanhui
+ *  @date 2020-02-23 10:16
+ *  
+ */
+public class GetContractReceivablesResp {
     /**
      * 主键id
      */
@@ -38,30 +45,6 @@ public class ContractReceivablesFollowEntity {
      */
     private String remark;
 
-    /**
-     * 状态：0正常，1删除，2锁定
-     */
-    private Byte status;
-
-    /**
-     * 创建人
-     */
-    private Long creator;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改人
-     */
-    private Long modifier;
-
-    /**
-     * 更新时间
-     */
-    private Date modifyTime;
 
     public Long getId() {
         return id;
@@ -119,43 +102,4 @@ public class ContractReceivablesFollowEntity {
         this.remark = remark;
     }
 
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    public Long getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Long creator) {
-        this.creator = creator;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(Long modifier) {
-        this.modifier = modifier;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
 }

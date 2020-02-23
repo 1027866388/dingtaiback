@@ -56,4 +56,28 @@
       ,co.id DESC
     </if>
   </select>
+
+  <select id="getContractReceivables" resultType="com.dingtai.customermager.entity.response.GetContractReceivablesResp"
+          parameterType="java.lang.Long">
+    SELECT
+    id,
+    receive_time, receive_money, receive_method, receive_method,receive_method
+    from contract_receivables where contract_id=#{customerId}
+  </select>
+
+  <select id="getContractInvoice" resultType="com.dingtai.customermager.entity.response.GetContractInvoiceResp"
+          parameterType="java.lang.Long">
+    SELECT
+    id,
+    invoice_time, invoice_money, invoice_no, invoice_person,remark
+    from contract_invoice where contract_id=#{customerId}
+  </select>
+
+  <select id="getContractPeriod" resultType="com.dingtai.customermager.entity.response.GetContractPeriodResp"
+          parameterType="java.lang.Long">
+    SELECT
+    id,
+    start_time, end_time, period_money, period_name,period_content
+    from contract_period where contract_id=#{customerId}
+  </select>
 </mapper>
