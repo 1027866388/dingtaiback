@@ -3,9 +3,11 @@ package com.dingtai.customermager.controller;
 import com.dingtai.customermager.constants.DateTimeConstant;
 import com.dingtai.customermager.entity.Result;
 import com.dingtai.customermager.entity.request.AddQuotationReq;
+import com.dingtai.customermager.entity.request.GetAllProjectQuotationListReq;
 import com.dingtai.customermager.entity.response.GetProjectQuotationListResp;
 import com.dingtai.customermager.service.ProjectQuotationService;
 import com.dingtai.customermager.utils.DataValidator;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -62,6 +64,22 @@ public class ProjectQuotationController {
         List<GetProjectQuotationListResp> projectQuotationInfo = projectQuotationService.queryQuotationByProject(projectName);
 
         Result result = new Result(projectQuotationInfo);
+        return result;
+    }
+
+
+    /**
+     * 获取所有项目报价明细列表
+     *
+     * @param request 请求实体
+     * @return Result实体
+     */
+    @GetMapping("/listAllProjectQuotationInfo")
+    @ApiOperation(value = "获取所有项目报价明细列表", httpMethod = "GET")
+    public Result<PageInfo<GetProjectQuotationListResp>> queryAllProjectQuotation(GetAllProjectQuotationListReq request) {
+        DataValidator.isNull(request, "获取所有项目报价列表接口，请求参数不能为空！");
+
+        Result result = projectQuotationService.queryAllProjectQuotation(request);
         return result;
     }
 }

@@ -2,7 +2,9 @@ package com.dingtai.customermager.service;
 
 import com.dingtai.customermager.entity.Result;
 import com.dingtai.customermager.entity.request.AddQuotationReq;
+import com.dingtai.customermager.entity.request.GetAllProjectQuotationListReq;
 import com.dingtai.customermager.entity.response.GetProjectQuotationListResp;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -30,4 +32,13 @@ public interface ProjectQuotationService {
      * @return 项目报价明细实体
      */
     List<GetProjectQuotationListResp> queryQuotationByProject(String name);
+
+
+    /**
+     * 获取所有项目报价信息
+     *
+     * @param request 请求实体
+     * @return 用户列表实体
+     */
+    Result<PageInfo<GetProjectQuotationListResp>> queryAllProjectQuotation(GetAllProjectQuotationListReq request);
 }

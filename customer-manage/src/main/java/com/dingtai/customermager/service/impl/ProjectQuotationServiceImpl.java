@@ -5,6 +5,8 @@ import com.dingtai.customermager.dao.ProjectQuotationInfoMapper;
 import com.dingtai.customermager.entity.Result;
 import com.dingtai.customermager.entity.db.ProjectQuotationEntity;
 import com.dingtai.customermager.entity.request.AddQuotationReq;
+import com.dingtai.customermager.entity.request.GetAllProjectQuotationListReq;
+import com.dingtai.customermager.entity.request.GetProjectQuotationListReq;
 import com.dingtai.customermager.entity.response.GetProjectListResp;
 import com.dingtai.customermager.entity.response.GetProjectQuotationListResp;
 import com.dingtai.customermager.enums.ResultCodeEnum;
@@ -12,6 +14,9 @@ import com.dingtai.customermager.exceptions.TransactionException;
 import com.dingtai.customermager.service.ProjectQuotationService;
 import com.dingtai.customermager.service.ProjectService;
 import com.dingtai.customermager.utils.LogUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,11 +105,26 @@ public class ProjectQuotationServiceImpl implements ProjectQuotationService {
     public List<GetProjectQuotationListResp> queryQuotationByProject(String name) {
 
         List<GetProjectQuotationListResp> projectQuotationInfo = projectQuotationInfoMapper.queryQuotationByProject(name);
-//        if(projectQuotationInfo == null) {
-//            return new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询报价明细失败!");
-//        }
-//
-//        return new Result(projectQuotationInfo);
         return projectQuotationInfo;
+    }
+
+    /**
+     * 获取所有项目报价列表信息
+     *
+     * @param request 请求实体
+     * @return 用户列表实体
+     */
+    @Override
+    public Result<PageInfo<GetProjectQuotationListResp>> queryAllProjectQuotation(GetAllProjectQuotationListReq request) {
+        Result result;
+        PageHelper.startPage(request.getPageCurrent(), request.getPageSize());
+        Page<GetProjectQuotationListResp> allProjectQuotations = projectQuotationInfoMapper.queryAllProjectQuotation(request);
+        if (allProjectQuotations != null) {
+            PageInfo<GetProjectQuotationListResp> allProjectQuotationInfo = new PageInfo(allProjectQuotations);
+            result = new Result(allProjectQuotationInfo);
+        } else {
+            result = new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询数据为空！");
+        }
+        return result;
     }
 }

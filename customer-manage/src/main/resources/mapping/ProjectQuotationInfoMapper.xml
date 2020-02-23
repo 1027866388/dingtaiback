@@ -21,4 +21,13 @@
         LEFT JOIN project ur ON u.project = ur.id
         where ur.name = #{name};
     </select>
+
+    <!--获取所有项目的详细报价信息-->
+    <select id="queryAllProjectQuotation"
+            resultType="com.dingtai.customermager.entity.response.GetProjectQuotationListResp">
+        select
+        ur.id, ur.name, u.content, u.quotation,u.remark
+        from project_quotation u
+        LEFT JOIN project ur ON u.project = ur.id;
+    </select>
 </mapper>
