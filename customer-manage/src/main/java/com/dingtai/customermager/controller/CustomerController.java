@@ -43,7 +43,6 @@ public class CustomerController {
     @ApiOperation(value = "获取客户列表", httpMethod = "GET")
     public Result<PageInfo<GetCustomerListResp>> listCustomer(GetCustomerListReq request) {
         DataValidator.isNull(request, "获取客户列表接口，请求参数不能为空！");
-
         PageInfo<GetCustomerListResp>data = customerService.listCustomer(request);
         Result result=new Result(data);
         return result;
