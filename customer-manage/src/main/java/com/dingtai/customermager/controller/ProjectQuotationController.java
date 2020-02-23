@@ -3,6 +3,7 @@ package com.dingtai.customermager.controller;
 import com.dingtai.customermager.constants.DateTimeConstant;
 import com.dingtai.customermager.entity.Result;
 import com.dingtai.customermager.entity.request.AddQuotationReq;
+import com.dingtai.customermager.entity.response.GetProjectQuotationListResp;
 import com.dingtai.customermager.service.ProjectQuotationService;
 import com.dingtai.customermager.utils.DataValidator;
 import io.swagger.annotations.Api;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 报价模块接口
@@ -55,8 +57,11 @@ public class ProjectQuotationController {
      */
     @GetMapping("/getProjectQuotationInfo")
     @ApiOperation(value = "获取项目报价列表", httpMethod = "GET")
-    public Result getProjectQuotationInfo(@ApiParam(name = "projectName", value = "项目名称", required = true) @RequestParam String projectName) {
+    public Result<List<GetProjectQuotationListResp>> getProjectQuotationInfo(@ApiParam(name = "projectName", value = "项目名称", required = true) @RequestParam String projectName) {
         DataValidator.isNull(projectName, "获取项目报价明细接口，请求参数不能为空！");
-        return projectQuotationService.queryQuotationByProject(projectName);
+        List<GetProjectQuotationListResp> projectQuotationInfo = projectQuotationService.queryQuotationByProject(projectName);
+
+        Result result = new Result(projectQuotationInfo);
+        return result;
     }
 }

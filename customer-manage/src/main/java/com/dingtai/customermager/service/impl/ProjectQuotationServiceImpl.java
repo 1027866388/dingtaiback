@@ -97,13 +97,14 @@ public class ProjectQuotationServiceImpl implements ProjectQuotationService {
      * @return 项目报价明细实体
      */
     @Override
-    public Result queryQuotationByProject(String name) {
+    public List<GetProjectQuotationListResp> queryQuotationByProject(String name) {
 
         List<GetProjectQuotationListResp> projectQuotationInfo = projectQuotationInfoMapper.queryQuotationByProject(name);
-        if(projectQuotationInfo == null) {
-            return new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询报价明细失败!");
-        }
-
-        return new Result(projectQuotationInfo);
+//        if(projectQuotationInfo == null) {
+//            return new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询报价明细失败!");
+//        }
+//
+//        return new Result(projectQuotationInfo);
+        return projectQuotationInfo;
     }
 }
