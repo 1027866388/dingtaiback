@@ -44,4 +44,9 @@ public interface ContractService {
      * @return
      */
     public List<GetContractReceivablesResp> getContractReceivables(long contractId);
+
+    /**
+     * 删除合同
+     */
+    public void deleteContract(Long contractId);
 }

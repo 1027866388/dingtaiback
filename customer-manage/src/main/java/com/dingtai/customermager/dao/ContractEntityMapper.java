@@ -1,7 +1,9 @@
 package com.dingtai.customermager.dao;
 
 import com.dingtai.customermager.entity.db.ContractEntity;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ContractEntityMapper {
     /**
      *  根据主键删除一条记录

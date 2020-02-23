@@ -1,9 +1,8 @@
 package com.dingtai.customermager.service.impl;
 
+import com.dingtai.customermager.dao.ContractEntityMapper;
 import com.dingtai.customermager.dao.ContractInfoMapper;
-import com.dingtai.customermager.dao.CustomerInfoMapper;
 import com.dingtai.customermager.entity.request.GetContractListReq;
-import com.dingtai.customermager.entity.request.GetCustomerListReq;
 import com.dingtai.customermager.entity.response.*;
 import com.dingtai.customermager.service.ContractService;
 import com.github.pagehelper.Page;
@@ -25,6 +24,8 @@ import java.util.List;
 public class ContractServiceImpl implements ContractService {
     @Autowired
     private ContractInfoMapper contractInfoMapper;
+    @Autowired
+    private ContractEntityMapper contractEntityMapper;
     @Override
     public PageInfo<GetContractListResp> listContract(GetContractListReq request) {
         PageHelper.startPage(request.getPageCurrent(), request.getPageSize());
@@ -46,5 +47,13 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public List<GetContractReceivablesResp> getContractReceivables(long contractId) {
         return contractInfoMapper.getContractReceivables(contractId);
+    }
+
+    @Override
+    public void deleteContract(Long contractId) {
+        contractEntityMapper.deleteByPrimaryKey(contractId);
+        contractInfoMapper.deleteInvoiceByContractId(contractId);
+        contractInfoMapper.deletePeriodByContractId(contractId);
+        contractInfoMapper.deleteReceivablesByContractId(contractId);
     }
 }
