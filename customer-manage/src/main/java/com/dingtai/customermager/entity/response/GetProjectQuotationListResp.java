@@ -10,13 +10,18 @@ import java.io.Serializable;
  * @author peng.lu
  * @date 2020/2/22
  */
-//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+
 public class GetProjectQuotationListResp implements Serializable {
 
     /**
      * 项目id
      */
     private Long id;
+
+    /**
+     * 报价id
+     */
+    private Long quotationId;
 
     /**
      * 项目名称
@@ -81,10 +86,19 @@ public class GetProjectQuotationListResp implements Serializable {
         this.remark = remark;
     }
 
+    public Long getQuotationId() {
+        return quotationId;
+    }
+
+    public void setQuotationId(Long quotationId) {
+        this.quotationId = quotationId;
+    }
+
     @Override
     public String toString() {
         return "GetProjectQuotationListResp{" +
                 "id=" + id +
+                ", quotationId=" + quotationId +
                 ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
                 ", quotation=" + quotation +

@@ -26,7 +26,7 @@
     <select id="queryAllProjectQuotation"
             resultType="com.dingtai.customermager.entity.response.GetProjectQuotationListResp">
         select
-        ur.id, ur.name, u.content, u.quotation,u.remark
+        ur.id, ur.name, u.id as quotationId, u.content, u.quotation, u.remark
         from project_quotation u
         LEFT JOIN project ur ON u.project = ur.id;
     </select>
