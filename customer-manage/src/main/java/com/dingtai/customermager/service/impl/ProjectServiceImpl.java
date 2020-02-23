@@ -1,10 +1,13 @@
 package com.dingtai.customermager.service.impl;
 
+import com.dingtai.customermager.dao.ProjectEntityMapper;
 import com.dingtai.customermager.dao.ProjectInfoMapper;
 import com.dingtai.customermager.entity.Result;
+import com.dingtai.customermager.entity.db.ProjectEntity;
+import com.dingtai.customermager.entity.request.AddProjectReq;
 import com.dingtai.customermager.entity.response.GetProjectListResp;
-import com.dingtai.customermager.entity.response.GetUserListResp;
 import com.dingtai.customermager.enums.ResultCodeEnum;
+import com.dingtai.customermager.exceptions.TransactionException;
 import com.dingtai.customermager.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectInfoMapper projectInfoMapper;
 
+    /**
+     * 项目实体Mapper
+     */
+    @Autowired
+    private ProjectEntityMapper projectEntityMapper;
+
     @Override
     public Result<GetProjectListResp> getProjectById(Long Id) {
         return null;
@@ -38,14 +47,38 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Result<GetProjectListResp> queryProjectByName(String name) {
 
-        Result result;
+        Result result = null;
         GetProjectListResp projectInfo = projectInfoMapper.queryProjectByName(name);
         if (projectInfo != null) {
             result = new Result(projectInfo);
-        } else {
-//            result = new Result(ResultCodeEnum.QUERY_DATA_ERROR, "查询数据为空！");
-            result = null;
         }
+        return result;
+    }
+
+    /**
+     * 新增项目
+     *
+     * @param addProjectReq 请求实体
+     * @return Result实体
+     */
+    @Override
+    public Result addProject(AddProjectReq addProjectReq) {
+        Result result;
+        //用户名
+        String projectName = addProjectReq.getProjectName();
+
+        GetProjectListResp projectInfo = projectInfoMapper.queryProjectByName(projectName);
+        if(projectInfo != null) {
+            return new Result(ResultCodeEnum.APPEND_DATA_ERROR, "当前项目已经存在!");
+        }
+
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setName(projectName);
+        int addProject = projectEntityMapper.insert(projectEntity);
+        if (addProject <= 0) {
+            throw new TransactionException(ResultCodeEnum.APPEND_DATA_ERROR, "新增项目表失败！");
+        }
+        result = new Result();
         return result;
     }
 }

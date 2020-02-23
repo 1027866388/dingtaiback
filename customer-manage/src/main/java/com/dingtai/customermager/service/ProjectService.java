@@ -1,6 +1,7 @@
 package com.dingtai.customermager.service;
 
 import com.dingtai.customermager.entity.Result;
+import com.dingtai.customermager.entity.request.AddProjectReq;
 import com.dingtai.customermager.entity.response.GetProjectListResp;
 
 /**
@@ -26,4 +27,12 @@ public interface ProjectService {
      * @return 项目信息
      */
     Result<GetProjectListResp> queryProjectByName(String name);
+
+    /**
+     * 新增项目
+     *
+     * @param req 请求实体
+     * @return Result实体
+     */
+    Result addProject(AddProjectReq req);
 }

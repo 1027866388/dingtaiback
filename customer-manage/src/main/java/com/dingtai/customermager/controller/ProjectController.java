@@ -1,6 +1,8 @@
 package com.dingtai.customermager.controller;
 
+import com.dingtai.customermager.constants.DateTimeConstant;
 import com.dingtai.customermager.entity.Result;
+import com.dingtai.customermager.entity.request.AddProjectReq;
 import com.dingtai.customermager.entity.response.GetProjectListResp;
 import com.dingtai.customermager.service.ProjectService;
 import com.dingtai.customermager.utils.DataValidator;
@@ -10,10 +12,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * 项目接口
@@ -44,5 +48,20 @@ public class ProjectController {
 
         DataValidator.isNull(name, "查询项目接口，请求参数不能为空！");
         return projectService.queryProjectByName(name);
+    }
+
+    /**
+     * 新增项目
+     *
+     * @param request 请求实体
+     * @return Result实体
+     */
+    @PostMapping("/addProject")
+    @ApiOperation(value = "新增项目", httpMethod = "POST")
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = DateTimeConstant.MINUTE_S, rollbackFor = Exception.class)
+    public Result addProject(@RequestBody @Valid AddProjectReq request) {
+
+        DataValidator.size(request.getProjectName(), 2, 50, "项目名长度在2到50之间");
+        return projectService.addProject(request);
     }
 }
