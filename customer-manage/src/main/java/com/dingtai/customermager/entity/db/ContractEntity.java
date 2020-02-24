@@ -1,5 +1,6 @@
 package com.dingtai.customermager.entity.db;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ContractEntity {
@@ -26,7 +27,7 @@ public class ContractEntity {
     /**
      * 合同金额
      */
-    private Long contractMoney;
+    private BigDecimal contractMoney;
 
     /**
      * 客户id
@@ -90,11 +91,11 @@ public class ContractEntity {
         this.signTime = signTime;
     }
 
-    public Long getContractMoney() {
+    public BigDecimal getContractMoney() {
         return contractMoney;
     }
 
-    public void setContractMoney(Long contractMoney) {
+    public void setContractMoney(BigDecimal contractMoney) {
         this.contractMoney = contractMoney;
     }
 

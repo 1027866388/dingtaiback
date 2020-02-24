@@ -1,6 +1,6 @@
 package com.dingtai.customermager.service;
 
-import com.dingtai.customermager.entity.request.GetContractListReq;
+import com.dingtai.customermager.entity.request.*;
 import com.dingtai.customermager.entity.response.GetContractInvoiceResp;
 import com.dingtai.customermager.entity.response.GetContractListResp;
 import com.dingtai.customermager.entity.response.GetContractPeriodResp;
@@ -49,4 +49,24 @@ public interface ContractService {
      * 删除合同
      */
     public void deleteContract(Long contractId);
+
+    /**
+     * 添加合同
+     */
+    public void addContract(AddContractReq addContractReq);
+
+    /**
+     * 添加合同发票
+     */
+    public void addContractInvoice(AddContractInvoiceReq addContractInvoiceReq);
+
+    /**
+     * 添加合同期间
+     */
+    public void addContractPeriod(AddContractPeriodReq addContractPeriodReq);
+
+    /**
+     * 添加合同收款
+     */
+    public void addContractReceivables(AddContractReceivablesReq addContractReceivablesReq);
 }

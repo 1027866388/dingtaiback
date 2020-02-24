@@ -1,76 +1,63 @@
-package com.dingtai.customermager.entity.db;
+package com.dingtai.customermager.entity.request;
 
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ContractPeriodEntity {
-    /**
-     * 主键id
-     */
-    private Long id;
+/**
+ *  TODO
+ *  
+ *  @author wangyanhui
+ *  @date 2020-02-24 15:00
+ *  
+ */
+public class AddContractPeriodReq {
 
     /**
      * 合同id
      */
+    @ApiModelProperty(value = "合同id", name = "contractId", allowEmptyValue = false)
+    @NotNull(message = "开票时间不能为空")
     private Integer contractId;
 
     /**
      * 开始时间
      */
+    @ApiModelProperty(value = "开始时间", name = "startTime", allowEmptyValue = false)
     private Date startTime;
 
     /**
      * 结束时间
      */
+    @ApiModelProperty(value = "结束时间", name = "endTime", allowEmptyValue = false)
     private Date endTime;
 
     /**
      * 期间金额
      */
+    @ApiModelProperty(value = "期间金额", name = "periodMoney", allowEmptyValue = false)
     private BigDecimal periodMoney;
 
     /**
      * 期间名称
      */
+    @ApiModelProperty(value = "期间名称", name = "periodName", allowEmptyValue = false)
+    @Size(min = 2, max = 200, message = "期间名称长度在2-200之间")
+    @NotBlank(message = "期间名称不能为空")
     private String periodName;
 
     /**
      * 期间内容
      */
+    @ApiModelProperty(value = "期间内容", name = "periodMoney", allowEmptyValue = false)
+    @Size(min = 2, max = 200, message = "期间内容长度在2-200之间")
+    @NotBlank(message = "期间内容不能为空")
     private String periodContent;
 
-    /**
-     * 状态：0正常，1删除，2锁定
-     */
-    private Byte status;
-
-    /**
-     * 创建人
-     */
-    private Long creator;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改人
-     */
-    private Long modifier;
-
-    /**
-     * 更新时间
-     */
-    private Date modifyTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Integer getContractId() {
         return contractId;
@@ -118,45 +105,5 @@ public class ContractPeriodEntity {
 
     public void setPeriodContent(String periodContent) {
         this.periodContent = periodContent;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    public Long getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Long creator) {
-        this.creator = creator;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(Long modifier) {
-        this.modifier = modifier;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
     }
 }

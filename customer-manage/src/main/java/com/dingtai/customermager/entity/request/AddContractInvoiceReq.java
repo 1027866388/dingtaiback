@@ -1,78 +1,66 @@
-package com.dingtai.customermager.entity.db;
+package com.dingtai.customermager.entity.request;
 
-import sun.rmi.runtime.Log;
+import io.swagger.annotations.ApiModelProperty;
+import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ContractInvoiceEntity {
-    /**
-     * 主键id
-     */
-    private Long id;
+/**
+ *  TODO
+ *  
+ *  @author wangyanhui
+ *  @date 2020-02-24 15:00
+ *  
+ */
+public class AddContractInvoiceReq {
 
     /**
      * 合同id
      */
+    @ApiModelProperty(value = "合同id", name = "contractId", allowEmptyValue = false)
+    @NotNull(message = "合同id不能为空")
+    @Min(0)
     private Long contractId;
 
     /**
      * 开票时间
      */
+    @ApiModelProperty(value = "开票时间", name = "invoiceTime", allowEmptyValue = false)
+    @NotNull(message = "开票时间不能为空")
     private Date invoiceTime;
 
     /**
      * 开票金额
      */
+    @ApiModelProperty(value = "发票金额", name = "invoiceMoney", allowEmptyValue = false)
+    @NotNull(message = "发票金额不能为空")
     private BigDecimal invoiceMoney;
 
     /**
      * 发票编号
      */
+    @ApiModelProperty(value = "发票编号", name = "invoiceNo", allowEmptyValue = false)
+    @NotBlank(message = "发票编号不能为空")
     private String invoiceNo;
 
     /**
      * 开票人
      */
+    @ApiModelProperty(value = "开票人", name = "invoicePerson", allowEmptyValue = false)
+    @NotNull(message = "开票人不能为空")
     private String invoicePerson;
 
     /**
      * 备注
      */
+    @ApiModelProperty(value = "备注", name = "remark", allowEmptyValue = true)
     private String remark;
 
-    /**
-     * 状态：0正常，1删除，2锁定
-     */
-    private Byte status;
-
-    /**
-     * 创建人
-     */
-    private Long creator;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改人
-     */
-    private Long modifier;
-
-    /**
-     * 更新时间
-     */
-    private Date modifyTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getContractId() {
         return contractId;
@@ -122,43 +110,4 @@ public class ContractInvoiceEntity {
         this.remark = remark;
     }
 
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    public Long getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Long creator) {
-        this.creator = creator;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(Long modifier) {
-        this.modifier = modifier;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
 }

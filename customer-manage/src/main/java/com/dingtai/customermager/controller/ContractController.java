@@ -3,8 +3,7 @@ package com.dingtai.customermager.controller;
 import com.dingtai.customermager.constants.DateTimeConstant;
 import com.dingtai.customermager.constants.PermissionConstant;
 import com.dingtai.customermager.entity.Result;
-import com.dingtai.customermager.entity.request.GetContractListReq;
-import com.dingtai.customermager.entity.request.GetCustomerListReq;
+import com.dingtai.customermager.entity.request.*;
 import com.dingtai.customermager.entity.response.*;
 import com.dingtai.customermager.enums.ResultCodeEnum;
 import com.dingtai.customermager.service.ContractService;
@@ -105,5 +104,50 @@ public class ContractController {
         contractService.deleteContract(contractId);
         return new Result();
     }
+    /**
+     * 添加合同
+     */
+    @PostMapping("/addContract")
+    @ApiOperation(value = "添加合同", httpMethod = "POST")
+    public Result addContract(AddContractReq addContractReq)
+    {
+        contractService.addContract(addContractReq);
+        return new Result();
+    }
+
+
+    /**
+     * 添加合同发票
+     */
+    @PostMapping("/addContractInvoice")
+    @ApiOperation(value = "添加合同发票", httpMethod = "POST")
+    public Result addContractInvoice(AddContractInvoiceReq addContractInvoiceReq)
+    {
+        contractService.addContractInvoice(addContractInvoiceReq);
+        return new Result();
+    }
+
+
+    /**
+     * 添加合同期间
+     */
+    @PostMapping("/addContractPeriod")
+    @ApiOperation(value = "添加合同期间", httpMethod = "POST")
+    public Result addContractPeriod(AddContractPeriodReq addContractPeriodReq){
+        contractService.addContractPeriod(addContractPeriodReq);
+        return new Result();
+    }
+
+
+    /**
+     * 添加合同收款
+     */
+    @PostMapping("/addContractReceivables")
+    @ApiOperation(value = "添加合同收款", httpMethod = "POST")
+    public Result addContractReceivables(AddContractReceivablesReq addContractReceivablesReq){
+        contractService.addContractReceivables(addContractReceivablesReq);
+        return new Result();
+    }
+
 
 }
