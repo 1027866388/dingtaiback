@@ -14,7 +14,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B package --file /dingtaiback/customer-manage/pom.xml
+      run: mvn -B package --file ../dingtaiback/customer-manage/pom.xml
     - name: SCP Command to Transfer Files
       uses: appleboy/scp-action@v0.0.6
       with:
