@@ -21,5 +21,6 @@ jobs:
         username: ${{ secrets.username }}
         password: ${{ secrets.password }}
         target: /usr/local/dingtai/backend
-        script: sshpass -p ${{ secrets.password }} scp customer-manage/target/dingtai-admin-api.jar ${{ secrets.username }}@${{ secrets.host }}:/usr/local/dingtai/backend
+        script: |
+          sshpass -p ${{ secrets.password }} scp customer-manage/target/dingtai-admin-api.jar ${{ secrets.username }}@${{ secrets.host }}:/usr/local/dingtai/backend
 
