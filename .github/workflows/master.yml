@@ -23,4 +23,12 @@ jobs:
         target: /usr/local/dingtai/backend
         source: customer-manage/target/dingtai-admin-api.jar
         rm: true
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.host }}
+        username: ${{ secrets.username }}
+        password: ${{ secrets.password }}
+        target: /usr/local/dingtai/backend
+        script: ./restartup.sh
 
