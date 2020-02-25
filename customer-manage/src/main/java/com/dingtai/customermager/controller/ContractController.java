@@ -145,8 +145,7 @@ public class ContractController {
     @ApiOperation(value = "获取合同基本信息", httpMethod = "GET")
     public Result<GetContractResp> getContract(@ApiParam(name = "id", value = "主键id", required = true) @RequestParam Long id) {
         GetContractResp data = contractService.getContract(id);
-
-
+        
         return new Result<>(data);
     }
 
