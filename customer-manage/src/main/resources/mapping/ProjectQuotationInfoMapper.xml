@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingtai.customermager.dao.ProjectQuotationInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.ProjectQuotationEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="quotation" property="quotation" jdbcType="DOUBLE" />
+    <result column="project" property="project" jdbcType="BIGINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, content, quotation, project, remark
+  </sql>
+
+  <!--根据项目名称获取详细报价信息-->
+  <select id="queryQuotationByProject" parameterType="java.lang.String"
+          resultType="com.dingtai.customermager.entity.response.GetProjectQuotationListResp">
+        select
+        u.content, u.quotation, u.remark, ur.name, ur.id
+        from project_quotation u
+        LEFT JOIN project ur ON u.project = ur.id
+        where ur.name = #{name};
+    </select>
+
+    <!--获取所有项目的详细报价信息-->
+    <select id="queryAllProjectQuotation"
+            resultType="com.dingtai.customermager.entity.response.GetProjectQuotationListResp">
+        select
+        ur.id, ur.name, u.id as quotationId, u.content, u.quotation, u.remark
+        from project_quotation u
+        LEFT JOIN project ur ON u.project = ur.id;
+    </select>
+</mapper>

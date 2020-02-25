@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingtai.customermager.dao.UserRoleInfoMapper">
+    <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.UserRoleEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="role_id" property="roleId" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, role_id, create_time, update_time
+  </sql>
+
+    <!--新增用户角色-->
+    <insert id="addUserRole" parameterType="com.dingtai.customermager.entity.db.UserRoleEntity">
+        insert into user_role(user_id, role_id)
+        values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
+    </insert>
+
+    <!--根据用户id删除用户角色-->
+    <delete id="deleteUserRole" parameterType="java.lang.Long">
+      delete from user_role
+      where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+
+    <!--批量删除用户角色-->
+    <delete id="batchDeleteUserRole" parameterType="java.util.List">
+        delete from user_role where user_id in
+        <foreach item="userIds" collection="list" open="(" separator="," close=")">
+            #{userIds,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <!--检查角色是否被分配给用户-->
+    <select id="checkRoleHasUsed" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from user_role where role_id = #{roleId,jdbcType=BIGINT}
+    </select>
+
+    <!--检查用户是否被赋予角色-->
+    <select id="checkUserHasRole" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(1) from user_role where user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <!--根据角色查询出对应的人员信息-->
+    <select id="selectUserNameByRole" resultType="java.util.HashMap">
+        select f.id userId,f.real_name userName  from   user f inner join
+        (select  d.user_id  from  user_role d inner join
+        (select b.id  from  role b where b.role_name=#{roleName}) c
+        on d.role_id=c.id) e on f.id=e.user_id
+    </select>
+
+    <!--根据角色查询对应人员详细信息-->
+    <select id="selectUserInfoByRole" resultType="java.util.HashMap">
+          select f.id userId,f.real_name userName,mobile,email  from   user f inner join
+        (select  d.user_id  from  user_role d inner join
+        (select b.id  from  role b where b.role_name=#{roleName}) c
+        on d.role_id=c.id) e on f.id=e.user_id
+    </select>
+
+    <!--根据地市和角色查询人员-->
+    <select id="selectPersonByCityCode" parameterType="java.lang.String" resultType="java.util.Map">
+     select f.id userId,oa_id oaId,f.real_name userName,mobile,email  from   user f inner join
+        (select  d.user_id  from  user_role d inner join (select b.id  from  role b where b.role_name=#{roleName}) c  on d.role_id=c.id ) e on f.id=e.user_id
+        inner join org g on g.id=f.org_id
+				where g.code=#{orgCode}
+    </select>
+
+    <!--根据用户ID查询用户角色名称-->
+    <select id="getUserRoleNameByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+        select  role_name from user a
+        inner join user_role b on a.id=b.user_id
+        inner join role c  on b.role_id=c.id
+        where a.id=#{userId}
+    </select>
+
+</mapper>

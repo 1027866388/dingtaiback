@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 文件输出格式 -->
+    <property name="PATTERN_CONSOLE"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) --- [%thread]  %green(%logger){50} %yellow(%M) %cyan(%L) - %msg%n"/>
+    <property name="PATTERN_LOG"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level --- [%thread]  %logger{50} %M %L - %msg%n"/>
+
+    <!-- dev文件路径 -->
+    <property name="DEV_FILE_PATH" value="logs/dingtai-admin/dev"/>
+    <!-- product文件路径 -->
+    <property name="PRO_FILE_PATH" value="logs/dingtai-admin/product"/>
+
+    <!-- dev测试环境 -->
+    <springProfile name="dev">
+
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN_CONSOLE}</pattern>
+                <charset>UTF-8</charset>
+            </encoder>
+        </appender>
+
+        <!-- 按照每天生成日志文件（所有） -->
+        <appender name="DEV-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${DEV_FILE_PATH}/all/digntai-admin.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <MaxHistory>30</MaxHistory>
+                <TimeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </TimeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN_LOG}</pattern>
+            </layout>
+        </appender>
+
+        <!-- DEV（Info日志） -->
+        <appender name="DEV-INFO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${DEV_FILE_PATH}/info/digntai-admin_info.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <MaxHistory>30</MaxHistory>
+                <TimeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </TimeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN_LOG}</pattern>
+            </layout>
+        </appender>
+
+        <!-- DEV（Warn日志）-->
+        <appender name="DEV-WARN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${DEV_FILE_PATH}/warn/digntai-admin_warn.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <MaxHistory>30</MaxHistory>
+                <TimeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </TimeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN_LOG}</pattern>
+            </layout>
+        </appender>
+
+        <!-- DEV（Error日志）-->
+        <appender name="DEV-ERROR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${DEV_FILE_PATH}/error/digntai-admin_error.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <MaxHistory>30</MaxHistory>
+                <TimeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </TimeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN_LOG}</pattern>
+            </layout>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="DEV-FILE"/>
+            <appender-ref ref="DEV-INFO-FILE"/>
+            <appender-ref ref="DEV-WARN-FILE"/>
+            <appender-ref ref="DEV-ERROR-FILE"/>
+        </root>
+    </springProfile>
+
+    <!-- 生产环境 -->
+    <springProfile name="product">
+
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN_CONSOLE}</pattern>
+            </encoder>
+        </appender>
+        <!-- 按照日志大小，当单个文件超过设定阈值，则叠加生成新的文件-->
+        <appender name="PRODUCT-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${PRO_FILE_PATH}/all/digntai-admin.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <MaxHistory>180</MaxHistory>
+                <TimeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </TimeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN_LOG}</pattern>
+            </layout>
+        </appender>
+
+        <!-- Product（Info日志） -->
+        <appender name="PRODUCT-INFO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${PRO_FILE_PATH}/info/digntai-admin_info.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <MaxHistory>180</MaxHistory>
+                <TimeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </TimeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN_LOG}</pattern>
+            </layout>
+        </appender>
+
+        <!-- Product（Warn日志） -->
+        <appender name="PRODUCT-WARN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${PRO_FILE_PATH}/warn/digntai-admin_warn.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <MaxHistory>180</MaxHistory>
+                <TimeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </TimeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN_LOG}</pattern>
+            </layout>
+        </appender>
+
+        <!-- Product（Error日志） -->
+        <appender name="PRODUCT-ERROR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${PRO_FILE_PATH}/error/digntai-admin_error.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+                <MaxHistory>180</MaxHistory>
+                <TimeBasedFileNamingAndTriggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </TimeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN_LOG}</pattern>
+            </layout>
+        </appender>
+
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="PRODUCT-FILE"/>
+            <appender-ref ref="PRODUCT-INFO-FILE"/>
+            <appender-ref ref="PRODUCT-WARN-FILE"/>
+            <appender-ref ref="PRODUCT-ERROR-FILE"/>
+        </root>
+    </springProfile>
+</configuration>

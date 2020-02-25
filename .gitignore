@@ -1,0 +1,11 @@
+*.iml
+*.class
+*.jar
+*.lst
+*.log
+*.prefs
+*.classpath
+*.project
+*.zip
+.idea/
+customer-manage/target/*

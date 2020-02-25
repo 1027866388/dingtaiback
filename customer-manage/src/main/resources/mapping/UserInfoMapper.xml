@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingtai.customermager.dao.UserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.UserEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="creator" property="creator" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modifier" property="modifier" jdbcType="BIGINT"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, real_name, user_name, mobile, email, password, org_id, status, last_login_time,
+    remark, creator, create_time, modifier, modify_time
+  </sql>
+
+    <!--获取User列表-->
+    <select id="listUserInfo" resultType="com.dingtai.customermager.entity.response.GetUserListResp"
+            parameterType="com.dingtai.customermager.entity.request.GetUserListReq">
+        SELECT
+        u.id,u.real_name, u.mobile, u.email, u.user_name, u.create_time,GROUP_CONCAT(ur.role_id) as
+        role_id,GROUP_CONCAT(r.role_name)
+        as role_name,
+        u.oa_id
+        from user u
+        LEFT JOIN user_role ur ON u.id=ur.user_id
+        LEFT JOIN role r ON r.id=ur.role_id
+        <where>
+            u.id !=1
+            <if test="realName != null and realName != ''">
+                AND real_name LIKE CONCAT('%',#{realName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile=#{mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name LIKE CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        GROUP BY u.id,u.real_name, u.mobile, u.email, u.user_name, u.create_time
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY id
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="descOrAsc != null and descOrAsc != ''">
+                ${descOrAsc}
+            </when>
+            <otherwise>
+                DESC
+            </otherwise>
+        </choose>
+        <if test="orderBy != null and orderBy != ''">
+            ,id DESC
+        </if>
+    </select>
+
+    <!-- 查询用户的所有权限 -->
+    <select id="queryAllPerms" resultType="string">
+        SELECT p.perms FROM user_role ur
+            LEFT JOIN role_permission rp ON rp.role_id = ur.role_id
+            LEFT JOIN permission p ON p.id = rp.permission_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <!-- 查询用户的所有权限Id -->
+    <select id="queryAllPermissionId" resultType="java.lang.Long">
+
+        SELECT parent_id AS permission_id FROM permission
+
+        WHERE id
+
+        IN
+        (
+        SELECT DISTINCT
+            (rp.permission_id)
+        FROM
+            user_role ur
+        LEFT JOIN role_permission rp ON rp.role_id = ur.role_id
+        WHERE
+            ur.user_id = #{userId}
+        )
+        AND parent_id !=0
+
+        UNION
+
+        SELECT DISTINCT
+            (rp.permission_id)
+        FROM
+            user_role ur
+        LEFT JOIN role_permission rp ON rp.role_id = ur.role_id
+        WHERE
+            ur.user_id = #{userId}
+    </select>
+
+    <!-- 根据用户名获取用户信息 -->
+    <select id="queryByUserName" resultType="com.dingtai.customermager.entity.db.UserEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_name =#{userName,jdbcType=VARCHAR}
+    </select>
+    <select id="queryByEmail" resultType="com.dingtai.customermager.entity.db.UserEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where email =#{email,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据真实姓名获取用户信息 -->
+    <select id="queryByRealName" resultType="com.dingtai.customermager.entity.db.UserEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where real_name =#{realName,jdbcType=VARCHAR}
+    </select>
+
+    <!--根据用户id获取用户信息-->
+    <select id="getUserByUserId" parameterType="java.lang.Long"
+            resultType="com.dingtai.customermager.entity.response.GetUserListResp">
+        select
+        u.id,u.real_name, u.mobile, u.email, u.user_name, u.create_time,GROUP_CONCAT(ur.role_id) as role_id,GROUP_CONCAT(r.role_name) as role_name,
+        u.oa_id,
+        o.id AS org_id,
+	    o1.id AS parent_id
+        from user u
+        LEFT JOIN user_role ur ON u.id=ur.user_id
+        LEFT JOIN role r ON r.id=ur.role_id
+        LEFT JOIN org o ON o.id = u.org_id
+        LEFT JOIN org o1 ON o1.id = o.parent_id
+        where u.id = #{id}
+        GROUP BY  u.id,u.real_name, u.mobile, u.email, u.user_name, u.create_time
+    </select>
+    <select id="getUserByOaId" parameterType="java.lang.String"
+            resultType="com.dingtai.customermager.entity.db.UserEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from user u
+        where u.oa_id = #{oaId}
+    </select>
+    <!--新增用户-->
+    <insert id="addUser" parameterType="com.dingtai.customermager.entity.db.UserEntity" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifier != null">
+                modifier,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="oaId != null">
+                oa_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifier != null">
+                #{modifier,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="oaId != null">
+                #{oaId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--更新用户-->
+    <update id="updateUser" parameterType="com.dingtai.customermager.entity.request.UpdateUserReq">
+        update user
+        set real_name = #{realName,jdbcType=VARCHAR},
+        mobile = #{mobile,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        org_id = #{orgId,jdbcType=BIGINT},
+        oa_id=#{oaId,jdbcType=VARCHAR}
+        where id = #{userId,jdbcType=BIGINT}
+    </update>
+
+    <!--删除用户-->
+    <delete id="deleteUser" parameterType="java.lang.Long">
+        delete from user where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!--批量删除用户-->
+    <delete id="batchDeleteUser" parameterType="java.util.List">
+        delete from user where id in
+        <foreach item="userIds" collection="list" open="(" separator="," close=")">
+            #{userIds,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <!--修改密码-->
+    <update id="updatePassword" parameterType="com.dingtai.customermager.entity.request.UpdatePwdReq">
+        update user set password = #{newPassword}
+        where id = #{userId} and password = #{oldPassword}
+    </update>
+    <!--重置密码-->
+    <update id="resetPassword" parameterType="com.dingtai.customermager.entity.request.ResetPwdReq">
+        update user set password = #{newPassword}
+        where id = #{userId}
+    </update>
+    <!--初始化密码-->
+    <update id="initPassword" parameterType="com.dingtai.customermager.entity.db.UserEntity">
+        update user set password = #{password}
+        where id = #{id}
+    </update>
+    <update id="lockUser" parameterType="java.lang.Long">
+        update user set status = 2,modify_time=now()
+        where id = #{userId}
+    </update>
+    <update id="unLockUser">
+        update user set status = 0,modify_time=now()
+        where `status`=2 AND TIMESTAMPDIFF(MINUTE,modify_time,NOW()) >=30
+    </update>
+    <!--查询用户OA-->
+    <select id="selectOaId" parameterType="java.lang.Long" resultType="java.lang.String">
+        select oa_id from user where id=#{id}
+    </select>
+</mapper>
