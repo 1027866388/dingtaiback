@@ -21,6 +21,6 @@ jobs:
         username: ${{ secrets.username }}
         password: ${{ secrets.password }}
         target: /usr/local/dingtai/backend
-        source: dingtai-admin-api.jar
+        source: ../dingtaiback/customer-manage/target/dingtai-admin-api.jar
         rm: true
 
