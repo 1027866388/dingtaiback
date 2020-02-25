@@ -22,6 +22,5 @@ jobs:
         password: ${{ secrets.password }}
         target: /usr/local/dingtai/backend
         script: |
-          yum install sshpass
           sshpass -p ${{ secrets.password }} scp customer-manage/target/dingtai-admin-api.jar ${{ secrets.username }}@${{ secrets.host }}:/usr/local/dingtai/backend
 
