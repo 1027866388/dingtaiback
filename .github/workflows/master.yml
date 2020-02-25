@@ -14,15 +14,6 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file customer-manage/pom.xml
-    - name: SCP Command to Transfer Files
-      uses: appleboy/scp-action@v0.0.6
-      with:
-        host: ${{ secrets.host }}
-        username: ${{ secrets.username }}
-        password: ${{ secrets.password }}
-        target: /usr/local/dingtai/backend
-        source: customer-manage/target/dingtai-admin-api.jar
-        rm: true
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
@@ -30,5 +21,5 @@ jobs:
         username: ${{ secrets.username }}
         password: ${{ secrets.password }}
         target: /usr/local/dingtai/backend
-        script: ./restartup.sh
+        script: sshpass -p ${{ secrets.password }} scp customer-manage/target/dingtai-admin-api.jar ${{ secrets.username }}@${{ secrets.host }}:/usr/local/dingtai/backend
 
