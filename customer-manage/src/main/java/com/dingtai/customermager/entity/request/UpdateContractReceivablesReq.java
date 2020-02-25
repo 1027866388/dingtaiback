@@ -2,6 +2,7 @@ package com.dingtai.customermager.entity.request;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,11 +13,23 @@ import java.util.Date;
  *  TODO
  *  
  *  @author wangyanhui
- *  @date 2020-02-24 15:01
+ *  @date 2020-02-25 10:11
  *  
  */
-public class AddContractReceivablesReq {
+public class UpdateContractReceivablesReq {
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @ApiModelProperty(value = "主键id", name = "id", allowEmptyValue = false)
+    @NotNull(message = "主键id不能为空")
+    @Min(0)
+    private Long id;
     /**
      * 合同id
      */

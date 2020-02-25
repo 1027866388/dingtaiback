@@ -1,94 +1,95 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dingtai.customermager.dao.ContractInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.ContractEntity" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
-    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
-    <result column="sign_time" property="signTime" jdbcType="TIMESTAMP" />
-    <result column="contract_money" property="contractMoney" jdbcType="DECIMAL" />
-    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="creator" property="creator" jdbcType="BIGINT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="modifier" property="modifier" jdbcType="BIGINT" />
-    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.dingtai.customermager.dao.ContractInfoMapper">
+    <resultMap id="BaseResultMap" type="com.dingtai.customermager.entity.db.ContractEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="contract_no" property="contractNo" jdbcType="VARCHAR"/>
+        <result column="contract_name" property="contractName" jdbcType="VARCHAR"/>
+        <result column="sign_time" property="signTime" jdbcType="TIMESTAMP"/>
+        <result column="contract_money" property="contractMoney" jdbcType="DECIMAL"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="creator" property="creator" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modifier" property="modifier" jdbcType="BIGINT"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, contract_no, contract_name, sign_time, contract_money, customer_id, status, creator,
     create_time, modifier, modify_time
   </sql>
-  <select id="listContract" resultType="com.dingtai.customermager.entity.response.GetContractListResp"
-          parameterType="com.dingtai.customermager.entity.request.GetContractListReq">
-    SELECT
-    co.id,
-    co.contract_no,
-    co.contract_name,
-    cu.customer_name,
-    co.sign_time,
-    co.contract_money,
-    co.customer_id,
-    co.status
-    from contract co
-    inner join  customer cu on co.customer_id=cu.id
-    <where>
-      <if test="contractNo != null and contractNo != ''">
-        AND contract_no LIKE CONCAT('%',#{contractNo,jdbcType=VARCHAR},'%')
-      </if>
-    </where>
-    <choose>
-      <when test="orderBy != null and orderBy != ''">
-        ORDER BY ${orderBy}
-      </when>
-      <otherwise>
-        ORDER BY co.id
-      </otherwise>
-    </choose>
-    <choose>
-      <when test="descOrAsc != null and descOrAsc != ''">
-        ${descOrAsc}
-      </when>
-      <otherwise>
-        DESC
-      </otherwise>
-    </choose>
-    <if test="orderBy != null and orderBy != ''">
-      ,co.id DESC
-    </if>
-  </select>
+    <select id="listContract" resultType="com.dingtai.customermager.entity.response.GetContractResp"
+            parameterType="com.dingtai.customermager.entity.request.GetContractListReq">
+        SELECT
+        co.id,
+        co.contract_no,
+        co.contract_name,
+        cu.customer_name,
+        co.sign_time,
+        co.contract_money,
+        co.customer_id,
+        co.status
+        from contract co
+        inner join customer cu on co.customer_id=cu.id
+        <where>
+            <if test="contractNo != null and contractNo != ''">
+                AND contract_no LIKE CONCAT('%',#{contractNo,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY co.id
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="descOrAsc != null and descOrAsc != ''">
+                ${descOrAsc}
+            </when>
+            <otherwise>
+                DESC
+            </otherwise>
+        </choose>
+        <if test="orderBy != null and orderBy != ''">
+            ,co.id DESC
+        </if>
+    </select>
 
-  <select id="getContractReceivables" resultType="com.dingtai.customermager.entity.response.GetContractReceivablesResp"
-          parameterType="java.lang.Long">
+    <select id="getContractReceivables"
+            resultType="com.dingtai.customermager.entity.response.GetContractReceivablesResp"
+            parameterType="java.lang.Long">
     SELECT
     id,
     receive_time, receive_money, receive_method, receive_method,receive_method
     from contract_receivables where contract_id=#{customerId}
   </select>
 
-  <select id="getContractInvoice" resultType="com.dingtai.customermager.entity.response.GetContractInvoiceResp"
-          parameterType="java.lang.Long">
+    <select id="getContractInvoice" resultType="com.dingtai.customermager.entity.response.GetContractInvoiceResp"
+            parameterType="java.lang.Long">
     SELECT
     id,
     invoice_time, invoice_money, invoice_no, invoice_person,remark
     from contract_invoice where contract_id=#{customerId}
   </select>
 
-  <select id="getContractPeriod" resultType="com.dingtai.customermager.entity.response.GetContractPeriodResp"
-          parameterType="java.lang.Long">
+    <select id="getContractPeriod" resultType="com.dingtai.customermager.entity.response.GetContractPeriodResp"
+            parameterType="java.lang.Long">
     SELECT
     id,
     start_time, end_time, period_money, period_name,period_content
     from contract_period where contract_id=#{customerId}
   </select>
-  <delete id="deleteInvoiceByContractId" parameterType="java.lang.Long" >
+    <delete id="deleteInvoiceByContractId" parameterType="java.lang.Long">
     delete from contract_invoice
     where contract_id= #{contractId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteReceivablesByContractId" parameterType="java.lang.Long" >
+    <delete id="deleteReceivablesByContractId" parameterType="java.lang.Long">
     delete from contract_receivables
     where contract_id= #{contractId,jdbcType=BIGINT}
   </delete>
-  <delete id="deletePeriodByContractId" parameterType="java.lang.Long" >
+    <delete id="deletePeriodByContractId" parameterType="java.lang.Long">
     delete from contract_period
     where contract_id= #{contractId,jdbcType=BIGINT}
   </delete>

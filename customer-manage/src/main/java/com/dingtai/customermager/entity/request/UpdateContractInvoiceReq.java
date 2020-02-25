@@ -12,11 +12,23 @@ import java.util.Date;
  *  TODO
  *  
  *  @author wangyanhui
- *  @date 2020-02-24 15:00
+ *  @date 2020-02-25 10:00
  *  
  */
-public class AddContractInvoiceReq {
+public class UpdateContractInvoiceReq {
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @ApiModelProperty(value = "主键id", name = "id", allowEmptyValue = false)
+    @NotNull(message = "主键id不能为空")
+    @Min(0)
+    private Long id;
     /**
      * 合同id
      */
@@ -107,5 +119,4 @@ public class AddContractInvoiceReq {
     public void setRemark(String remark) {
         this.remark = remark;
     }
-
 }

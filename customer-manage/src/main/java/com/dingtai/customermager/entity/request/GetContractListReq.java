@@ -1,6 +1,5 @@
 package com.dingtai.customermager.entity.request;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -26,4 +25,15 @@ public class GetContractListReq extends BasePageReq {
      */
     @ApiModelProperty(value = "合同编号", name = "contractNo", allowEmptyValue = true)
     private String contractNo;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @ApiModelProperty(value = "状态 0未完成 1已完成", name = "status", allowEmptyValue = true)
+    private Integer status;
 }

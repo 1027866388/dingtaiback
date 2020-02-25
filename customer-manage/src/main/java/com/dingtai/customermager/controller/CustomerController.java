@@ -33,6 +33,7 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
     /**
      * 获取用户列表
      *
@@ -43,26 +44,28 @@ public class CustomerController {
     @ApiOperation(value = "获取客户列表", httpMethod = "GET")
     public Result<PageInfo<GetCustomerListResp>> listCustomer(GetCustomerListReq request) {
         DataValidator.isNull(request, "获取客户列表接口，请求参数不能为空！");
-        PageInfo<GetCustomerListResp>data = customerService.listCustomer(request);
-        Result result=new Result(data);
+        PageInfo<GetCustomerListResp> data = customerService.listCustomer(request);
+        Result result = new Result(data);
         return result;
     }
 
     /**
      * 获取客户的跟进信息
+     *
      * @param customerId
      * @return
      */
     @GetMapping("/getCustomerFollow")
     @ApiOperation(value = "获取客户的跟进信息", httpMethod = "GET")
     public Result<List<GetCustomerFollowResp>> getCustomerFollow(@ApiParam(name = "customerId", value = "客户id", required = true) @RequestParam Long customerId) {
-        List<GetCustomerFollowResp>data = customerService.getCustomerFollow(customerId);
-        Result result=new Result(data);
+        List<GetCustomerFollowResp> data = customerService.getCustomerFollow(customerId);
+        Result result = new Result(data);
         return result;
     }
 
     /**
      * 删除客户
+     *
      * @param customerId
      * @return
      */
@@ -71,7 +74,7 @@ public class CustomerController {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = DateTimeConstant.MINUTE_S, rollbackFor = Exception.class)
     public Result<List<GetCustomerFollowResp>> deleteCustomer(@ApiParam(name = "customerId", value = "客户id", required = true) @RequestParam Long customerId) {
         customerService.deleteCustomer(customerId);
-        Result result=new Result();
+        Result result = new Result();
         return result;
     }
 }

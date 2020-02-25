@@ -12,7 +12,7 @@ import java.util.Date;
  *  @date 2020-02-21 14:47
  *  
  */
-public class GetContractListResp {
+public class GetContractResp {
     /**
      * 主键id
      */

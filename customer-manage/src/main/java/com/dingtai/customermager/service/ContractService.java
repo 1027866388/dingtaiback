@@ -1,10 +1,12 @@
 package com.dingtai.customermager.service;
 
-import com.dingtai.customermager.entity.request.*;
+import com.dingtai.customermager.entity.request.AddContractReq;
+import com.dingtai.customermager.entity.request.GetContractListReq;
+import com.dingtai.customermager.entity.request.UpdateContractReq;
 import com.dingtai.customermager.entity.response.GetContractInvoiceResp;
-import com.dingtai.customermager.entity.response.GetContractListResp;
 import com.dingtai.customermager.entity.response.GetContractPeriodResp;
 import com.dingtai.customermager.entity.response.GetContractReceivablesResp;
+import com.dingtai.customermager.entity.response.GetContractResp;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -19,13 +21,15 @@ import java.util.List;
 public interface ContractService {
     /**
      * 合同分页接口
+     *
      * @param request
      * @return
      */
-    public PageInfo<GetContractListResp> listContract(GetContractListReq request);
+    public PageInfo<GetContractResp> listContract(GetContractListReq request);
 
     /**
      * 获取合同发票信息
+     *
      * @param contractId
      * @return
      */
@@ -33,6 +37,7 @@ public interface ContractService {
 
     /**
      * 获取合同期间信息
+     *
      * @param contractId
      * @return
      */
@@ -40,6 +45,7 @@ public interface ContractService {
 
     /**
      * 获取合同收款信息
+     *
      * @param contractId
      * @return
      */
@@ -56,7 +62,20 @@ public interface ContractService {
     public void addContract(AddContractReq addContractReq);
 
 
+    /**
+     * 更新合同基本信息
+     *
+     * @param updateContractReq
+     */
+    public void updateContract(UpdateContractReq updateContractReq);
 
+    /**
+     * 得到合同基本信息
+     *
+     * @param id
+     * @return
+     */
+    public GetContractResp getContract(long id);
 
 
 }
