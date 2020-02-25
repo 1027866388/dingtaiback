@@ -77,4 +77,18 @@ public class CustomerController {
         Result result = new Result();
         return result;
     }
+
+    /**
+     * 获取客户
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/getCustomer")
+    @ApiOperation(value = "获取客户", httpMethod = "POST")
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = DateTimeConstant.MINUTE_S, rollbackFor = Exception.class)
+    public Result<List<GetCustomerFollowResp>> getCustomer(@ApiParam(name = "id", value = "id", required = true) @RequestParam Long id) {
+        Result result = new Result();
+        return result;
+    }
 }
