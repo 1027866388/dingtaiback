@@ -55,18 +55,8 @@ public interface ContractService {
      */
     public void addContract(AddContractReq addContractReq);
 
-    /**
-     * 添加合同发票
-     */
-    public void addContractInvoice(AddContractInvoiceReq addContractInvoiceReq);
 
-    /**
-     * 添加合同期间
-     */
-    public void addContractPeriod(AddContractPeriodReq addContractPeriodReq);
 
-    /**
-     * 添加合同收款
-     */
-    public void addContractReceivables(AddContractReceivablesReq addContractReceivablesReq);
+
+
 }
